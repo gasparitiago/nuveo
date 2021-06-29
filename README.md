@@ -4,7 +4,7 @@
 
 Para este teste, foram propostas duas soluções diferentes, ambas implementadas dentro do diretório `01-WheresWally`, uma delas baseada em técnicas tradicionais de visão computacional e outra baseada em redes neurais (como definido no enunciado).
 
-Particularmente, eu resolveria este problema utilizando a abordagem tradicional, sem utilização de redes neurais, por alguns motivos explicados abaixo.
+Particularmente, eu resolveria este problema utilizando uma abordagem tradicional, sem utilização de redes neurais, por alguns motivos explicados abaixo.
 
 ### Solução utilizando *Feature Maching*
 
@@ -40,3 +40,34 @@ Após isso, uma rede baseada na arquitetura Mask RCNN foi treinada utilizando a 
 Por se tratar de um problema simples, não foram exercitados melhorias no modelo proposto inicialmente, não foram utilizadas estratégias de *data augmentation* e de busca pelos melhores parâmetros durante a etapa de treinamento, visto que a acurácia do modelo durante a validação foi acima de 97% na métrica IOU.
 
 Os resultados da inferência deste modelo no conjunto de testes está no arquivo `results_cnn_test.csv`.
+
+Resolvi utilizar Pytorch pois é uma ferramenta que eu nunca havia utilizado para realizar esse tipo de treinamento (apenas Tensorflow e Keras), mas foi algo bem simples de aprender.
+
+## 02-SMSSpamDetection
+
+Foram criados dois arquivos: `spam_detector.py`, contendo a classe principal solicitada no enunciado e `unit_test` que contém testes unitários que utilizam a classe criada.
+
+Para executar os unit_tests, é necessário executar o script:
+```
+    python3 -m unittest unit_test.py
+```
+
+#### Opções de limiares para considerar uma mensagem como SPAM ou não
+
+No enunciado, há a seguinte instrução:
+
+> Para construção do método is_spam , considere um cenário real em que os usuários finais possa escolher uma entre duas opções:
+1- que nenhuma mensagem de spam chegue em sua caixa de entrada, mesmo com algumas ham sendo classificadas como spam
+2- que nenhuma mensagem ham vá para caixa de spam, mesmo que algumas spam cheguem na caixa de entrada
+
+A única forma de assegurar com 100% de certeza, de que as opções 1 e 2 estão, de fato, sendo atendidas é:
+- 1: Classificar todas as mensagens como SPAM.
+- 2: Classificar todas as mensagens como HAM.
+
+Logicamente, essas soluções não podem ser utilizadas em uma solução deste tipo, pois o modelo nem está sendo utilizado.
+
+O que pode ser feito para que essas duas opções sejam atendidas com uma melhor acurácia que o modelo original, é a utilização de um threshold dentro da função is_spam para considerar diferentes modos e retornar que uma mensagem é considerada SPAM a partir deste threshold (apenas quando a probabilidade é muito alta), e vice-versa.
+
+Para a obtenção destes 2 thresholds (um para evitar falsos positivos e um para evitar falsos negativos), eu fiz uma análise da curva de precision e recall, que está disponível no arquivo `SMS_PrecisionRecall`. Em outras palavras, esse script foi apenas utilizado para determinar os thresholds e esses valores foram utilizados dentro da classe criada anteriormente.
+
+Como esse funcionamento depende apenas de um threshold, não é necessário retreinar um modelo novo e nem utilizar múltiplos modelos para as diferentes opções solicitadas.
