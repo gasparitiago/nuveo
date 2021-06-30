@@ -1,0 +1,28 @@
+# Instruções
+- As questões devem ser respondidas neste próprio documento `markdown`.
+- Quaisquer referências, como papers, páginas web, imagens, etc, podem ser utilizadas para composição das respostas. Porém, é recomendado que as respostas sejam objetivas e diretas.
+- Não há uma resposta correta para cada pergunta, de forma que a avaliação não será feita com comparação da resposta fornecida com um gabarito. A ideia da proposta é fornecer a oportunidade de demonstrar o conhecimento na construção de uma solução para o cenário proposto, levantar possíveis limitações, impedimentos e como os problemas podem ser evitados ou minimizados, sem que seja necessário dedicar tempo com experimentos, treinos e determinação de parâmetros de forma empírica.
+
+
+# Perguntas
+
+1-Explique, de forma objetiva, qual abordagem seria escolhida para solução do problema proposto. Caso a abordagem envolva Redes Neurais, descreva qual seria a arquitetura de rede utilizada e por que.
+R: O problema em si é um problema de classificação de imagens. Eu utilizaria uma abordagem de classificação de imagens se baseando em redes neurais convolucionais para classificar os dados. Como existem poucas imagens, eu focaria em utilizar uma rede pré-treinada e utilizar a técnica de *transfer learning* para obtenção de um novo modelo que resolva o problema em específico. Devido ao pequeno número de imagens, eu também tentaria realizar métodos de *data augmentation*, principalmente para gerar pequenas alterações nas imagens a fim de gerar mais dados para treinamento. Outra solução seria utilizar uma abordagem baseada em Machine Learning tradicional onde cada feature seria alguns dados de formato da assinatura e formato das letras, assim como junções e outros aspectos de uma assinatura.
+
+2-Liste e explique qual a linguagem, framework, pacotes e ferramentas seriam utilizados para construção da solução.
+R: Essa questão de framework depende muito de questões práticas, se o sistema será utilizado por clientes em uma aplicação na nuvem ou se será executado em dispositivos móveis, por exemplo. Em relação a solução, desconsiderando o *deploy*, pode ser usado Python com frameworks como Tensorflow, Keras ou Pytorch. Para lidar com os dados pode-se utilizar numpy, pandas, sklearn, matplotlib para visualização dos dados e albumnation para criação dos dados aumentados. Pode-se utilizar também outras ferramentas para visualização dos dados. Para lidar com as imagens em si, pode-se utilizar OpenCV.
+
+3-Quais os principais parâmetros da solução e como melhor otimizar a escolha de tais parâmetros?
+R: Não entendi se a questão se refere aos hiper-parâmetros da rede ou não. Se for o caso, os parâmetros a serem obtidos são o *learning rate*, *momentum*, qual o optimizador a ser escolhido, os pesos iniciais da rede, qual será a função de ativação, a regularização de *dropout*, o número de *folds* durante a validação cruzada, entre outros. A busca pelos melhores parâmetros podem ser obtidos por buscas do tipo *Grid Search*.
+
+4-Quais limitações podem impactar a solução proposta, seja em relação à própria abordagem escolhida ou em relação ao dataset fornecido para treino e teste?
+R: Em relação a abordagem, pode have um problema de o modelo não convergir e não atingir uma acurácia ideal para distinguir as classes propostas. Em relação ao dataset fornecido, podem haver imagens muito parecidas (o que reduziria o número de amostras), ou até mesmo um conjunto de dados não significativo. Pode ser que as assinaturas possuam características semelhantes, onde os dois grupos não sejam completamente separáveis (pode ser que uma assinatura falsa seja mais parecida que uma real em relação a assinatura de refecência), o que pode causar problemas de convergência no modelo. Além disso, como o conjunto de dados é pequeno, o modelo pode sofrer de *overfitting*, e extrair apenas características presentes na assinatura de uma pessoa em específico, não sendo útil para classificar assinaturas falsas de outras pessoas.
+
+5-Qual seria o prazo proposto para o desenvolvimento da solução proposta?
+R: Apenas para o primeiro protótipo, onde as abordagens acima foram citadas, com testes em todos os aspectos para uma melhor acurácia e uso do modelo, acredito que de duas a três semanas. Para realização do *deploy* da solução o prazo seria maior e dependente dos requisitos do cliente.
+
+6-Considerando um cenário real de uso do método desenvolvido para detecção de fraudes em assinatura, o erro mais prejudicial seria retornar que uma assunatura é legítima quando trata-se de uma assinatura forjada. Como minimizar este tipo de erro?
+R: Esse tipo de problema pode ser minimizado de uma maneira similar à realizada na tarefa 2, onde utilizando uma curva de precision/recall é possível identificar em um conjunto de validação qual é o threshold de decisão que zera o número de falsos negativos (onde uma assinatura é forjada e não identificada como tal). Nesse caso, o número de falsos positivos (assinaturas reais que são negadas) pode aumentar, porém é um preço que é melhor pagar para que uma assinatura falsa não cause problemas.
+
+7-O que poderia ser alterado na disposição de dados para auxiliar o resultado da solução proposta?
+R: Eu acredito que ter um dataset que contenha assinaturas reais e falsas de outras pessoas pode ajudar, pois há características de assinaturas diferentes de pessoas diferentes que podem não ser identificadas durante o treinamento do modelo que podem ser importantes. Além disso, acredito que seja interessante que o objetivo da rede não seja classificar múltiplas classes, apenas se a assinatura é verdadeira ou falsa. Isso facilitaria a classificação e utilização do *threshold* mencionado no item 6.
