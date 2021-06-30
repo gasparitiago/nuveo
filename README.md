@@ -71,3 +71,7 @@ O que pode ser feito para que essas duas opções sejam atendidas com uma melhor
 Para a obtenção destes 2 thresholds (um para evitar falsos positivos e um para evitar falsos negativos), eu fiz uma análise da curva de precision e recall, que está disponível no arquivo `SMS_PrecisionRecall`. Em outras palavras, esse script foi apenas utilizado para determinar os thresholds e esses valores foram utilizados dentro da classe criada anteriormente.
 
 Como esse funcionamento depende apenas de um threshold, não é necessário retreinar um modelo novo e nem utilizar múltiplos modelos para as diferentes opções solicitadas.
+
+## 03-SMSSpamDetection
+
+As respostas se encontram no arquivo *markdown* no diretório `03-FraudDetection`.
